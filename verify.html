@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>验证码验证</title>
+</head>
+<body>
+  <h2>请输入验证码：</h2>
+  <input type="text" id="code" maxlength="6" />
+  <button onclick="checkCode()">验证</button>
+  <p id="result"></p>
+
+  <script>
+    const token = new URLSearchParams(window.location.search).get('token');
+    async function checkCode() {
+      const input = document.getElementById("code").value;
+      const res = await fetch("tokens.json");
+      const data = await res.json();
+      if (data[token] && data[token].includes(input)) {
+        window.location.href = "success.html";
+      } else {
+        window.location.href = "fail.html";
+      }
+    }
+  </script>
+</body>
+</html>
